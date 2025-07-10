@@ -113,11 +113,13 @@ Terraform downloaded the `aws` provider and installed it in a hidden `.terraform
 
 You will notice these folders come up after the command is ran.
 
-### [(2/4) Plan Terraform Changes]
+### (2/4) Plan Terraform Changes
 `terraform plan` command creates an execution plan that shows the changes Terraform will make to your infrastructure. This allows you to review these proposed changes to ensure they align with your expectations before you apply them.
 
 ### [(3/4) Validate Terraform Configuration](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/aws-create#validate-configuration)
 `terraform validate` checks if the Terraform code is syntactically correct and internally consistent, without actually trying to create or change any real resources.  For example, if you mistype a resource name or refer to an argument your resource does not support, Terraform will report an error when you validate your configuration.
+
+NOTE: Whenever we run `terraform apply` or `terraform plan`, it automatically runs  `terraform validate`
 
 ### [(4/4) Apply Terraform Configuration](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/aws-create#create-infrastructure)
 by using `terraform apply`,
@@ -125,4 +127,14 @@ by using `terraform apply`,
 2. Once you approve the execution plan, Terraform applies those changes using your workspace's providers.
 
 This workflow ensures that you can detect and resolve any unexpected problems with your configuration before Terraform makes changes to your infrastructure.
+
+NOTE: `terraform apply` creates a new file. `terraform.tfstate` 
+the `terraform.tfstate` file is the backbone of Terraform's ability to manage your infrastructure reliably and efficiently. It's the persistent record that allows Terraform to understand, track, and reconcile the desired state of your infrastructure with its actual deployed state.
+
+### [Inspect State](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/aws-create#inspect-state)
+When you applied your configuration, Terraform wrote data about your infrastructure into a file called `terraform.tfstate`. Terraform stores data about your infrastructure in its state file, which it uses to manage resources over their lifecycle.
+
+We can list the resources and data sources in our Terraform workspace's state with the `terraform state list` command.
+
+Even though the data source is not an actual resource, Terraform tracks it in your state file. Print out your workspace's entire state using the `terraform show` command.
 
