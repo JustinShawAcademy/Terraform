@@ -56,8 +56,8 @@ resource "aws_instance" "app_server" {
     Name = "learn-terraform"
   }
 }
-
 ```
+> NOTE: All the code above can be found in the `main.tf` folder. Later we will execute them using the terminal
 
 - [Configuration and credential files](https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-files.html#cli-configure-files-format) 
 
@@ -99,3 +99,30 @@ output = text
 ```
 
 NOTE: We can also write into `~/.aws/credentials` and `~/.aws/config` without using `aws configure`. This can be done by simply using `vim ~/.aws/credentials` to manually type.
+
+## Terraform Lifecycle 
+### [Formate Configuration](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/aws-create#format-configuration)
+`terraform fmt` is a simple command that takes care of the "housekeeping" for Terraform files, making them organized, easy to read, and consistent across a team.
+automatically reformats all configuration files in the current directory according to HashiCorp's recommended style.
+
+### [(1/4) Initialize Terraform Project](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/aws-create#initialize-your-workspace)
+
+Before you can apply your configuration, you must initialize your Terraform workspace with the `terraform init` command. As part of initialization, Terraform downloads and installs the providers defined in your configuration in your current working directory.
+
+Terraform downloaded the `aws` provider and installed it in a hidden `.terraform` subdirectory of your current working directory. Terraform also created a file named `.terraform.lock.hcl` which specifies the exact provider versions used with your workspace, ensuring consistency between runs.
+
+You will notice these folders come up after the command is ran.
+
+### [(2/4) Plan Terraform Changes]
+`terraform plan` command creates an execution plan that shows the changes Terraform will make to your infrastructure. This allows you to review these proposed changes to ensure they align with your expectations before you apply them.
+
+### [(3/4) Validate Terraform Configuration](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/aws-create#validate-configuration)
+`terraform validate` checks if the Terraform code is syntactically correct and internally consistent, without actually trying to create or change any real resources.  For example, if you mistype a resource name or refer to an argument your resource does not support, Terraform will report an error when you validate your configuration.
+
+### [(4/4) Apply Terraform Configuration](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/aws-create#create-infrastructure)
+by using `terraform apply`,
+1. Terraform creates an execution plan for the changes it will make. Review this plan to ensure that Terraform will make the changes you expect.
+2. Once you approve the execution plan, Terraform applies those changes using your workspace's providers.
+
+This workflow ensures that you can detect and resolve any unexpected problems with your configuration before Terraform makes changes to your infrastructure.
+
